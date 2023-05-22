@@ -20,11 +20,11 @@ async def on_ready():
 @bot.event
 async def on_member_update(before, after):
     if after.id == friend_user_id:
-        if before.status == discord.Status.offline and after.status == discord.Status.dnd:
+        if before.status == discord.Status.offline and after.status != discord.Status.offline:
             user = await bot.fetch_user(your_user_id)
             dm_channel = await user.create_dm()
-            await dm_channel.send(f"{user.name}, your friend is now online in Do Not Disturb mode!")
-        elif before.status == discord.Status.dnd and after.status == discord.Status.offline:
+            await dm_channel.send(f"{user.name}, your friend is now online!")
+        elif before.status != discord.Status.offline and after.status == discord.Status.offline:
             user = await bot.fetch_user(your_user_id)
             dm_channel = await user.create_dm()
             await dm_channel.send(f"{user.name}, your friend has gone offline!")
